@@ -7,7 +7,7 @@
 int main() {
     pid_t pid = fork();
 
-    if (pid == -1) {
+    if (pid < 0) {
         perror(errno);
         return errno;
     }
@@ -18,7 +18,9 @@ int main() {
         
         execve(binaryPath, args, NULL);
     } else {
-        wait(pid);
+        int status = 0;
+        wait(&status);
+        printf("returned status %d", status);
     }
 
     return 0;
