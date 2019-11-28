@@ -40,7 +40,7 @@ void *runner(void *params) {
 
 int main() {
 
-    if (set_init(&sem, 0, 0)) {
+    if (sem_init(&sem, 0, 0)) {
         perror("pzdms 1");
         return errno;
     }
@@ -58,6 +58,9 @@ int main() {
             perror(NULL);
             return errno;
         } 
+    }
+    for (int i = 0; i < MAX_RES; i++) {
+	pthread_join(pids[i], NULL);
     }
 
     return 0;
